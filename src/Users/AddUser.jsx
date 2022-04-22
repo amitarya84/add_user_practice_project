@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../UI/Button';
 import Card from '../UI/Card';
 import Errormodel from '../UI/ErrorModel';
@@ -9,6 +9,8 @@ const Adduser = (props) => {
     const [enteredName, setenteredName] = useState('');
     const [enteredAge, setenteredAge] = useState('');
     const [error, setError] = useState();
+    const nameInput = useRef();
+    const ageInput = useRef();
 
     const addUserHandler = (e) => {
         e.preventDefault()
@@ -35,8 +37,8 @@ const Adduser = (props) => {
         }
         
         props.addUser(user);
-        setenteredAge('')
-        setenteredName('')
+        nameInput.current.value = '';
+        ageInput.current.value = '';
     }
 
     const userNameChangeHandler = (e) => {
@@ -62,16 +64,16 @@ const Adduser = (props) => {
                     <input
                         type="text"
                         id='username'
-                        value={enteredName}
                         onChange={userNameChangeHandler}
+                        ref={nameInput}
                     />
 
                     <label htmlFor="age">User Age</label>
                     <input
                         type="number"
                         id='age'
-                        value={enteredAge}
                         onChange={userAgeChangeHandler}
+                        ref={ageInput}
                     />
 
                     <Button type="submit" btnTxt="Add User" />
